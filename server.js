@@ -6,12 +6,15 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const app     = express();
 
+// 환경 변수 로드
+require('dotenv').config();
+
 // 이메일 전송을 위한 트랜스포터 설정
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'lhc4815@gmail.com',
-    pass: 'khgp xsjv roxd cxqp'
+    user: process.env.EMAIL_USER || 'lhc4815@gmail.com',
+    pass: process.env.EMAIL_PASS || 'khgp xsjv roxd cxqp'
   }
 });
 

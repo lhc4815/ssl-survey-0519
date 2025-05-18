@@ -1,2 +1,19 @@
-# 환경 변수 파일 (비밀값)
+# Dependency directories
+node_modules/
+
+# Environment variables
 .env
+
+# Local data
+data/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Optional npm cache directory
+.npm
+
+# VSCode 
+.vscode/
