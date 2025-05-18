@@ -24,13 +24,14 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // In a real implementation, this would save the data to a database
-    // For now, just acknowledge receipt
-    console.log('Received survey data');
+    // No actual database operations or file system writes
+    // Just log and acknowledge
+    console.log('Received survey data', JSON.stringify(req.body).substring(0, 100) + '...');
     
     return res.status(200).json({ 
       success: true, 
-      message: 'Survey data received successfully'
+      message: 'Survey data received successfully',
+      timestamp: new Date().toISOString()
     });
   } catch (err) {
     console.error('[/api/save-survey] Error:', err);

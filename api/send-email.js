@@ -35,17 +35,17 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Create test-mode or simplified email response for Vercel
-    // This avoids actual email sending which might not work in Vercel's environment
-    console.log(`Would send email for student: ${studentName || 'Unknown'}`);
+    // Create simulated success response (no actual file system or email operations)
+    console.log(`Would process email for student: ${studentName || 'Unknown'}, filename: ${filename || 'unknown.xlsx'}`);
     
     // Send success response
     return res.status(200).json({ 
       success: true, 
-      message: '설문 결과가 이메일로 전송되었습니다.',
+      message: '설문 결과가 처리되었습니다.',
       info: {
         studentName: studentName || 'Unknown',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        fileSize: content ? content.length : 0
       }
     });
   } catch (err) {

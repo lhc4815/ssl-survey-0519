@@ -24,13 +24,14 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // In a real implementation, this would save the code data
-    // For now, just acknowledge receipt
-    console.log('Received used codes data');
+    // No file system operations, just log and acknowledge
+    const { usedCodes } = req.body || {};
+    console.log('Received used codes data', usedCodes ? `Count: ${usedCodes.length}` : 'No data');
     
     return res.status(200).json({ 
       success: true, 
-      message: 'Used codes data received successfully'
+      message: 'Used codes data received successfully',
+      timestamp: new Date().toISOString()
     });
   } catch (err) {
     console.error('[/api/save-codes] Error:', err);

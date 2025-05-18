@@ -1,8 +1,11 @@
 // Root index.js for Vercel deployment
-// This file helps redirect to the proper static files
+// Simply redirect to the docs folder
 
 module.exports = (req, res) => {
-  // Redirect to the static index.html in the docs folder
+  // Set a simple cookie to track visitor
+  res.setHeader('Set-Cookie', 'visited=true; Path=/; HttpOnly');
+  
+  // Redirect to the docs/index.html page
   res.writeHead(302, { Location: '/docs/index.html' });
   res.end();
 };
