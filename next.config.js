@@ -1,25 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Use statically served files from /docs directory
-  assetPrefix: '/docs',
+  reactStrictMode: true,
   
-  // Create a public folder that serves from root
-  publicRuntimeConfig: {
-    staticFolder: '/docs',
-  },
+  // Set basePath to empty so the server serves from root
+  basePath: '',
   
-  // Allow images from docs directory
-  images: {
-    domains: ['localhost'],
-    unoptimized: true,
-  },
-  
-  // Redirect root to docs/index.html
-  async rewrites() {
+  // Define redirects to send root to the docs/index.html
+  async redirects() {
     return [
       {
         source: '/',
         destination: '/docs/index.html',
+        permanent: false,
       },
     ];
   },

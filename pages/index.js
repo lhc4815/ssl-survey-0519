@@ -1,22 +1,32 @@
-// This is a placeholder page that will redirect to /docs/index.html
-// The redirection is configured in next.config.js
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-// This component will never be rendered
 export default function Home() {
+  const router = useRouter();
+  
+  // Client-side redirect using Next.js router
+  useEffect(() => {
+    router.replace('/docs/index.html');
+  }, [router]);
+  
+  // Fallback content in case redirect doesn't work
   return (
-    <div>
-      <h1>Redirecting to main app...</h1>
-      <p>If you're not redirected, <a href="/docs/index.html">click here</a></p>
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      height: '100vh', 
+      fontFamily: 'Arial, sans-serif' 
+    }}>
+      <h1>SSL 설문조사</h1>
+      <p>리다이렉팅 중...</p>
+      <p>자동으로 이동하지 않으면 <a href="/docs/index.html">여기를 클릭하세요</a></p>
+      
+      {/* Fallback meta redirect */}
+      <noscript>
+        <meta httpEquiv="refresh" content="0;url=/docs/index.html" />
+      </noscript>
     </div>
   );
-}
-
-// Server-side redirection as a fallback
-export async function getServerSideProps({ res }) {
-  if (res) {
-    res.writeHead(302, { Location: '/docs/index.html' });
-    res.end();
-  }
-  
-  return { props: {} };
 }
