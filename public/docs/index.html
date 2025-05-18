@@ -245,21 +245,7 @@
         <div class="pill" data-value="서울형 자사고">서울형 자사고</div>
         <div class="pill" data-value="일반고">일반고</div>
       </div>
-
-      <div class="filter-group" style="margin-top: 20px; text-align: center;">
-        <label style="display: inline-flex; align-items: center; cursor: pointer; background: #FFF3E0; padding: 6px 12px; border-radius: 4px; border: 1px solid #FFB74D;">
-          <input type="checkbox" id="test-mode" style="margin-right: 8px;">
-          <span style="color: #E64A19; font-weight: bold;">테스트 모드 활성화 (마지막 문항으로 바로 이동)</span>
-        </label>
-      </div>
       
-      <script>
-        // 테스트 모드 DOM 로딩 확인
-        document.addEventListener('DOMContentLoaded', function() {
-          console.log('테스트 모드 체크박스 로딩 확인:', document.getElementById('test-mode'));
-        });
-      </script>
-
       <button id="start" disabled>설문 시작</button>
     </div>
 
@@ -293,8 +279,8 @@
   <div id="result" class="hidden">
     <h2>설문이 완료되었습니다. 감사합니다!</h2>
     <div style="padding: 20px; background-color: #f5f5f5; border-radius: 8px; text-align: center; margin: 20px 0;">
-      <p style="font-size: 1.1em; margin-bottom: 15px;">📧 설문 결과가 관리자에게 이메일로 전송됩니다.</p>
-      <p style="color: #555;">이메일 전송 중... 잠시만 기다려 주세요.</p>
+      <p style="font-size: 1.1em; margin-bottom: 15px;">📊 설문 결과가 성공적으로 저장되었습니다.</p>
+      <p style="color: #555;">처리 중... 잠시만 기다려 주세요.</p>
     </div>
     <!-- 아래 링크는 버전 호환성을 위해 남겨두지만 스크립트에서 숨김 처리됩니다 -->
     <a id="download-link" href="#" download="survey_result.xlsx" style="display:none;">
