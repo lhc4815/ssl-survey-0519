@@ -381,6 +381,9 @@ tPills.forEach(p    => p.addEventListener('click', validatePersonalInfo));
         // 테스트 모드 확인 - 활성화되어 있으면 바로 결과 화면으로 이동
         const isTestMode = testModeCheckbox && testModeCheckbox.checked;
         
+        console.log('🔍 테스트 모드 체크박스:', testModeCheckbox);
+        console.log('🔍 테스트 모드 활성화 상태:', isTestMode);
+        
         if (isTestMode) {
           console.log('🔍 테스트 모드 활성화: 마지막 문항으로 바로 이동');
           
