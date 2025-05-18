@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   
-  // Only redirect the root path to the docs/index.html
+  // Redirect root to docs/index.html
   async redirects() {
     return [
       {

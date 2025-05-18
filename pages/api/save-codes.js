@@ -1,5 +1,4 @@
-// API route for saving used codes data
-export default function handler(req, res) {
+export default async function handler(req, res) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -9,22 +8,22 @@ export default function handler(req, res) {
     'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
   );
 
-  // Handle OPTIONS request (preflight)
+  // Handle OPTIONS request
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
   }
 
-  // Allow only POST requests
+  // Only allow POST method
   if (req.method !== 'POST') {
-    return res.status(405).json({ 
-      success: false, 
-      error: 'Method not allowed, please use POST' 
+    return res.status(405).json({
+      success: false,
+      error: 'Method not allowed, please use POST'
     });
   }
 
   try {
-    // No file system operations, just log and acknowledge
+    // Get usedCodes from request body
     const { usedCodes } = req.body || {};
     console.log('Received used codes data', usedCodes ? `Count: ${usedCodes.length}` : 'No data');
     
@@ -34,7 +33,7 @@ export default function handler(req, res) {
       timestamp: new Date().toISOString()
     });
   } catch (err) {
-    console.error('[/api/save-codes] Error:', err);
+    console.error('[/api/save-codes] error:', err);
     return res.status(500).json({
       success: false,
       error: err.message || 'Unknown server error'

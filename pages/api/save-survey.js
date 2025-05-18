@@ -1,5 +1,4 @@
-// API route for saving survey data
-export default function handler(req, res) {
+export default async function handler(req, res) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -9,23 +8,24 @@ export default function handler(req, res) {
     'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
   );
 
-  // Handle OPTIONS request (preflight)
+  // Handle OPTIONS request
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
   }
 
-  // Allow only POST requests
+  // Only allow POST method
   if (req.method !== 'POST') {
-    return res.status(405).json({ 
-      success: false, 
-      error: 'Method not allowed, please use POST' 
+    return res.status(405).json({
+      success: false,
+      error: 'Method not allowed, please use POST'
     });
   }
 
   try {
-    // No actual database operations or file system writes
-    // Just log and acknowledge
+    // In a serverless function, we can't save to disk
+    // Instead, log the data and return a success response
+    // In a real scenario, this would connect to a database
     console.log('Received survey data', JSON.stringify(req.body).substring(0, 100) + '...');
     
     return res.status(200).json({ 
@@ -34,7 +34,7 @@ export default function handler(req, res) {
       timestamp: new Date().toISOString()
     });
   } catch (err) {
-    console.error('[/api/save-survey] Error:', err);
+    console.error('[/api/save-survey] error:', err);
     return res.status(500).json({
       success: false,
       error: err.message || 'Unknown server error'
