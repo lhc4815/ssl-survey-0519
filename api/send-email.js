@@ -49,7 +49,7 @@ module.exports = async (req, res) => {
       }
     });
   } catch (err) {
-    console.error('[/api/send-email] 오류:', err);
+    console.error('[/api/send-email] Error:', err);
     return res.status(500).json({
       success: false,
       error: err.message || 'Unknown server error'

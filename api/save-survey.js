@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
       message: 'Survey data received successfully'
     });
   } catch (err) {
-    console.error('[/api/save-survey] error:', err);
+    console.error('[/api/save-survey] Error:', err);
     return res.status(500).json({
       success: false,
       error: err.message || 'Unknown server error'

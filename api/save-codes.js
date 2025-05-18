@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
       message: 'Used codes data received successfully'
     });
   } catch (err) {
-    console.error('[/api/save-codes] error:', err);
+    console.error('[/api/save-codes] Error:', err);
     return res.status(500).json({
       success: false,
       error: err.message || 'Unknown server error'
