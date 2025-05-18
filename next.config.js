@@ -2,10 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   
-  // Set basePath to empty so the server serves from root
-  basePath: '',
-  
-  // Define redirects to send root to the docs/index.html
+  // Only redirect the root path to the docs/index.html
+  // and let Next.js handle all other routes normally
   async redirects() {
     return [
       {
