@@ -986,14 +986,21 @@ blob.arrayBuffer().then(buffer => {
   .then(async (res) => {
     // 응답 상태 확인
     if (!res.ok) {
+      // 응답 복제 후 텍스트로 먼저 읽기 시도
+      const responseClone = res.clone();
       try {
-        // 에러 응답이 JSON인 경우
-        const errorData = await res.json();
-        throw new Error(errorData.error || `서버 에러 (${res.status})`);
-      } catch (jsonError) {
-        // 에러 응답이 JSON이 아닌 경우 텍스트로 읽기
-        const errorText = await res.text();
-        throw new Error(`서버 에러 (${res.status}): ${errorText.substring(0, 100)}`);
+        const errorText = await responseClone.text();
+        try {
+          // 텍스트가 JSON인지 확인
+          const errorData = JSON.parse(errorText);
+          throw new Error(errorData.error || `서버 에러 (${res.status})`);
+        } catch (jsonParseError) {
+          // JSON 파싱 실패 시 텍스트 그대로 사용
+          throw new Error(`서버 에러 (${res.status}): ${errorText.substring(0, 100)}`);
+        }
+      } catch (textReadError) {
+        // 텍스트 읽기 실패 시 기본 오류 메시지
+        throw new Error(`서버 에러 (${res.status}): 상세 정보를 가져올 수 없습니다`);
       }
     }
     return res.json();
