@@ -1,5 +1,5 @@
-// API endpoint to handle save-codes requests
-export default async (req, res) => {
+// API route for saving used codes data
+export default function handler(req, res) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -40,4 +40,4 @@ export default async (req, res) => {
       error: err.message || 'Unknown server error'
     });
   }
-};
+}

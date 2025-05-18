@@ -1,22 +1,25 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  // Skip building React client-side bundle
-  experimental: {
-    appDir: false,
+  // Use statically served files from /docs directory
+  assetPrefix: '/docs',
+  
+  // Create a public folder that serves from root
+  publicRuntimeConfig: {
+    staticFolder: '/docs',
   },
-  // We're using the docs folder for our static files
-  // This redirects the root to the docs/index.html
+  
+  // Allow images from docs directory
+  images: {
+    domains: ['localhost'],
+    unoptimized: true,
+  },
+  
+  // Redirect root to docs/index.html
   async rewrites() {
     return [
       {
         source: '/',
         destination: '/docs/index.html',
-      },
-      {
-        source: '/:path*',
-        destination: '/docs/:path*',
       },
     ];
   },

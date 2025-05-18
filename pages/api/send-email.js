@@ -1,5 +1,5 @@
-// Serverless function for sending emails through Vercel
-export default async (req, res) => {
+// API route for email sending (simulation only)
+export default function handler(req, res) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -53,4 +53,4 @@ export default async (req, res) => {
       error: err.message || 'Unknown server error'
     });
   }
-};
+}
