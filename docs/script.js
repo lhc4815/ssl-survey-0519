@@ -1,7 +1,8 @@
 // script.js
 
 window.addEventListener('DOMContentLoaded', () => {
-
+  console.log('DOMContentLoaded 이벤트 발생');
+  
   /* ── 상수 ───────────────────────────────────────── */
   const TOTAL_LIMIT = 90 * 60;   // 전체 제한 시간 90분
   const A_Q_SEC     = 10;        // Type A: 10초/문항
@@ -23,6 +24,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const startBtn        = document.getElementById('start');
   const testModeCheckbox = document.getElementById('test-mode');
+  console.log('testModeCheckbox 요소:', testModeCheckbox);
   //const devB            = document.getElementById('dev-b');
   //const devC            = document.getElementById('dev-c');
 
