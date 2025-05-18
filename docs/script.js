@@ -983,7 +983,21 @@ blob.arrayBuffer().then(buffer => {
       studentName: nameVal
     })
   })
-  .then(res => res.json())
+  .then(async (res) => {
+    // 응답 상태 확인
+    if (!res.ok) {
+      try {
+        // 에러 응답이 JSON인 경우
+        const errorData = await res.json();
+        throw new Error(errorData.error || `서버 에러 (${res.status})`);
+      } catch (jsonError) {
+        // 에러 응답이 JSON이 아닌 경우 텍스트로 읽기
+        const errorText = await res.text();
+        throw new Error(`서버 에러 (${res.status}): ${errorText.substring(0, 100)}`);
+      }
+    }
+    return res.json();
+  })
   .then(result => {
     console.log('▶ 이메일 전송 결과:', result);
     
