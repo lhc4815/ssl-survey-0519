@@ -34,5 +34,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Do NOT ignore public/docs 
-# !/public/docs/
+# IMPORTANT: do not ignore public/docs directory
+!public/
+!public/docs/
