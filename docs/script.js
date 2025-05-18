@@ -973,16 +973,36 @@ blob.arrayBuffer().then(buffer => {
   }
   const b64 = btoa(binary);
   
-  // 이메일 전송 요청
-  fetch('/api/send-email', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      filename: `survey_result_${nameVal.replace(/\s+/g,'_')}.xlsx`,
-      content: b64,
-      studentName: nameVal
+  // 테스트 API 호출 먼저 시도
+  fetch('/api/test-api')
+    .then(res => res.json())
+    .then(data => {
+      console.log('🧪 Test API 응답:', data);
+      
+      // 테스트 성공 후 실제 이메일 전송 시도
+      return fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          filename: `survey_result_${nameVal.replace(/\s+/g,'_')}.xlsx`,
+          content: b64,
+          studentName: nameVal
+        })
+      });
     })
-  })
+    .catch(err => {
+      console.error('🧪 Test API 실패:', err);
+      // 테스트 실패해도 이메일 전송은 시도
+      return fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          filename: `survey_result_${nameVal.replace(/\s+/g,'_')}.xlsx`,
+          content: b64,
+          studentName: nameVal
+        })
+      });
+    })
   .then(async (res) => {
     // 응답 상태 확인
     if (!res.ok) {
