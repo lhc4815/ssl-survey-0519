@@ -252,6 +252,13 @@
           <span style="color: #E64A19; font-weight: bold;">테스트 모드 활성화 (마지막 문항으로 바로 이동)</span>
         </label>
       </div>
+      
+      <script>
+        // 테스트 모드 DOM 로딩 확인
+        document.addEventListener('DOMContentLoaded', function() {
+          console.log('테스트 모드 체크박스 로딩 확인:', document.getElementById('test-mode'));
+        });
+      </script>
 
       <button id="start" disabled>설문 시작</button>
     </div>
