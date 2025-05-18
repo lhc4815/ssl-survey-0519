@@ -3,7 +3,6 @@ const nextConfig = {
   reactStrictMode: true,
   
   // Only redirect the root path to the docs/index.html
-  // and let Next.js handle all other routes normally
   async redirects() {
     return [
       {
