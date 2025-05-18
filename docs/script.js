@@ -22,6 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const resultDiv       = document.getElementById('result');
 
   const startBtn        = document.getElementById('start');
+  const testModeCheckbox = document.getElementById('test-mode');
   //const devB            = document.getElementById('dev-b');
   //const devC            = document.getElementById('dev-c');
 
@@ -376,8 +377,25 @@ tPills.forEach(p    => p.addEventListener('click', validatePersonalInfo));
         stage = 'A';
         startTime = Date.now();
         startTotalTimer();
-        startSegmentATimer();
-        renderQuestionA();
+        
+        // 테스트 모드 확인 - 활성화되어 있으면 바로 결과 화면으로 이동
+        const isTestMode = testModeCheckbox && testModeCheckbox.checked;
+        
+        if (isTestMode) {
+          console.log('🔍 테스트 모드 활성화: 마지막 문항으로 바로 이동');
+          
+          // Type A, B, C 응답을 모두 기본값으로 설정
+          respA = respA.map(() => 3); // 3 (보통)
+          respB = respB.map(() => 'A');
+          respC = respC.map(() => 'A');
+          
+          // 설문 완료 처리
+          finishSurvey();
+        } else {
+          // 일반 모드: A부터 시작
+          startSegmentATimer();
+          renderQuestionA();
+        }
       })
       .catch(e=>{
         console.error(e);
