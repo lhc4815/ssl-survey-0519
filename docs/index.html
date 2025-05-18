@@ -288,21 +288,19 @@
       </nav>
     </div>
 
-    <!-- 3) 결과 화면 -->
+  <!-- 3) 결과 화면 -->
       <!-- 3) 결과 화면 -->
   <div id="result" class="hidden">
-    <h2>감사합니다!</h2>
-    <!-- 기존 설문 결과 다운로드 링크 -->
-    <a id="download-link"
-       href="#"
-       download="survey_result.xlsx">
+    <h2>설문이 완료되었습니다. 감사합니다!</h2>
+    <div style="padding: 20px; background-color: #f5f5f5; border-radius: 8px; text-align: center; margin: 20px 0;">
+      <p style="font-size: 1.1em; margin-bottom: 15px;">📧 설문 결과가 관리자에게 이메일로 전송됩니다.</p>
+      <p style="color: #555;">이메일 전송 중... 잠시만 기다려 주세요.</p>
+    </div>
+    <!-- 아래 링크는 버전 호환성을 위해 남겨두지만 스크립트에서 숨김 처리됩니다 -->
+    <a id="download-link" href="#" download="survey_result.xlsx" style="display:none;">
       📥 최근 설문 다운로드
     </a>
-    <!-- 추가: 사용된 코드 다운로드 링크 -->
-    <a id="used-download-link"
-       href="#"
-       download="used_stu_codes.xlsx"
-       style="margin-left:12px;">
+    <a id="used-download-link" href="#" download="used_stu_codes.xlsx" style="display:none;">
       📥 사용된 코드 다운로드
     </a>
   </div>

@@ -963,33 +963,59 @@ function finishSurvey() {
   if (dl) dl.style.display = 'none'; // 직후에 추가
 
 blob.arrayBuffer().then(buffer => {
-  console.log('▶ GitHub 업로드 시작', nameVal, completeAt);
+  console.log('▶ 이메일 전송 시작', nameVal, completeAt);
 
-  // GitHub 업로드 요청
-  fetch('/api/upload', {
+  // Base64 변환
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  const b64 = btoa(binary);
+  
+  // 이메일 전송 요청
+  fetch('/api/send-email', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      path: `responses/survey_result_${nameVal.replace(/\s+/g,'_')}.xlsx`,
-      commitMessage: `Survey result for ${nameVal} at ${completeAt}`
+      filename: `survey_result_${nameVal.replace(/\s+/g,'_')}.xlsx`,
+      content: b64,
+      studentName: nameVal
     })
   })
-
-  .then(res => {
-    console.log('▶ /api/upload 응답 status:', res.status);
-    res.json()})
-
-  .then(({ rawUrl }) => {
+  .then(res => res.json())
+  .then(result => {
+    console.log('▶ 이메일 전송 결과:', result);
     
-    // 다운로드 링크를 GitHub raw URL로 교체
-    dl.href = rawUrl;
-
-    if (error) {
-      console.error('GitHub 업로드 중 에러:', error);
-      return;
+    // 결과 화면에 메시지 표시
+    const resultDiv = document.getElementById('result');
+    const messageDiv = document.createElement('div');
+    messageDiv.style = 'margin-top:20px; padding:12px; background:#E8F5E9; color:#2E7D32; border-radius:4px; border:1px solid #A5D6A7';
+    
+    if (result.success) {
+      messageDiv.innerHTML = '<strong>✅ 성공:</strong> 설문 결과가 이메일로 전송되었습니다.';
+    } else {
+      messageDiv.innerHTML = `<strong>❌ 오류:</strong> 이메일 전송 실패: ${result.error || '알 수 없는 오류'}`;
+      messageDiv.style.background = '#FFEBEE';
+      messageDiv.style.color = '#C62828';
+      messageDiv.style.borderColor = '#FFCDD2';
     }
+    
+    resultDiv.appendChild(messageDiv);
+    
+    // 다운로드 링크 숨김
+    if (dl) dl.style.display = 'none';
   })
-  .catch(err => console.error('GitHub 업로드 실패:', err));
+  .catch(err => {
+    console.error('이메일 전송 실패:', err);
+    
+    // 오류 메시지 표시
+    const resultDiv = document.getElementById('result');
+    const messageDiv = document.createElement('div');
+    messageDiv.style = 'margin-top:20px; padding:12px; background:#FFEBEE; color:#C62828; border-radius:4px; border:1px solid #FFCDD2';
+    messageDiv.innerHTML = `<strong>❌ 오류:</strong> 이메일 전송 실패: ${err.message || '네트워크 오류'}`;
+    resultDiv.appendChild(messageDiv);
+  });
 });
 
  // ── 사용된 코드 엑셀 생성 ─────────────────────────────
